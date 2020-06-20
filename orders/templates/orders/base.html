@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+
+    <title>Pizza</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{% static 'orders/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'orders/css/font-awesome.min.css' %}">
+    <!-- custom -->
+    <link rel="stylesheet" href="{% static 'orders/css/templatemo-style.css' %}">
+    <!-- google font -->
+    <link href='//fonts.googleapis.com/css?family=Signika:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
+    {% block head %}{% endblock %} 
+</head>
+
+<body id="home" data-spy="scroll" data-target=".navbar-collapse">
+    <!-- start navigation -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                    <span class="icon icon-bar"></span>
+                </button>
+                <a href="{% url 'index' %}" class="navbar-brand mr-5"><strong>PIZZA</strong></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'index' %}" class="">HOME</a></li>
+                    <li><a href="{% url 'menu' %}" class="">MENU</a></li>
+                    <li><a href="{% url 'about' %}" class="">ABOUT</a></li>
+                    <li><a href="{% url 'contact' %}" class="">CONTACT</a></li>
+                    {% if request.user.is_superuser %}
+                        <li><a href="{% url 'view_customers_orders' %}" class="">View customers' orders</a></li>
+                    {% endif %}
+                    
+                    {% if user.username != '' %}
+                            <li><a href="{% url 'cart'%}" class=""><i class="fa fa-shopping-cart"></i></a></li>
+                    {% endif %}
+                </ul>
+                {% if user.username != '' %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" style="margin-top: 15px;" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>{{user.username}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                <a class="dropdown-item log-block" href="{% url 'logout' %}">Logout</a>
+                                <a class="dropdown-item" href="{% url 'view_orders' %}">View orders</a>
+                            </div>
+                        </div>
+                    </ul>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="{% url 'login' %}" class="">Login</a></li>
+                        <li><a href="{% url 'register' %}" class="">Register</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- end navigation -->
+    {% block body %}{% endblock %}
+    
+    <!-- start footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Copyright &copy; 2020 PizzaW</p>
+                    <hr>
+                    <ul class="social-icon">
+                        <li><a target="_blank" href="https://www.facebook.com/mohamed.rafat.1023" class="fa fa-facebook"></a></li>
+                        <li><a target="_blank" href="https://twitter.com/tech_mohamad" class="fa fa-twitter"></a></li>
+                        <li><a target="_blank" href="https://www.instagram.com/mohamad__raafat/" class="fa fa-instagram"></a></li>
+                        <li><a target="_blank" href="https://github.com/mohamadRaafat" class="fa fa-github"></a></li>
+                        <li><a target="_blank" href="https://www.linkedin.com/in/mohamed-rafat-70780b18a/" class="fa fa-linkedin"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+<script src="{% static 'orders/js/jquery.js' %}"></script>
+<script src="{% static 'orders/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'orders/js/plugins.js' %}"></script>
+<script src="{% static 'orders/js/custom.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+{% extends "orders/base.html" %}
+
+
+{% block body %}
+
+
+
+<div class="container order-cards">
+    <div class="card mb-3 text-center" style="max-width: 540px;">
+        <div class="row no-gutters">
+            <h1 class="mb-5"><u>Here lives all the past orders</u></h1>
+            <div class="result-orders">
+                {% for order in all_orders %}
+                <div class="order-div border">
+                <!-- el order el wahed, mmkn yb2a feh kaza item el kano fel cart kolohom -->
+                <!-- bas henna kol order, order kamel kolo kolo -->
+                    <h2>Order Id: {{order.order_id}}</h2>
+                    {% if not order.confirmed_by_restaurant %}
+                        <h4>status: Pending</h4>
+                    {% else %}
+                        <h4>status: Confirmed</h4>
+                    {% endif %}
+                    <p class="lead"><mark>{{order.date}}</mark></p>
+                    {{ order.order_details|safe }}  
+                    <!-- <button class="btn btn-block btn-warning">Confirm order</button> -->
+                </div>
+                                           
+                {% endfor %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(function() {
+
+            html = document.querySelector('.result-orders').innerText;
+            html = html.replace(/<hr>/g, "")
+            html += `<hr>`
+            document.querySelector('.result-orders').innerHTML = html
+        }, 3000)
+    })
+    </script> -->
+
+{% endblock %}
+

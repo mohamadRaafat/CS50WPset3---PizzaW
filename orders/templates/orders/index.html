@@ -1,0 +1,31 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+
+{% block body %}
+	<!-- start flexslider -->
+	<div class="flexslider">
+		<ul class="slides">
+			<li>
+				<img src="{% static 'orders/images/slider-img1.jpg' %}" alt="Pizza Image 1">
+				<div class="flex-caption">
+					<h2 class="slider-title">We make Pizza</h2>
+					<h3 class="slider-subtitle">Fresh, clean, and delicious.</h3>
+				</div>
+			</li>
+			<li>
+				<img src="{% static 'orders/images/slider-img2.jpg' %}" alt="Pizza Image 2">
+				<div class="flex-caption">
+					<h2 class="slider-title">Freshly Baked Pizza</h2>
+					<h3 class="slider-subtitle">Premium Quality, Finest Ingredients</h3>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- end flexslider -->
+{% endblock %}
+
+
+	
+
+	

@@ -1,0 +1,90 @@
+{% extends "orders/base.html" %}
+
+{% block body %}
+
+<div class="container order-cards">
+    <div class="card mb-3 text-center" style="max-width: 540px;">
+        <div class="row no-gutters">
+            
+        </div>
+        <p class="lead" id="total-price">Total Price: $120</p>
+        <form action="{% url 'confirm_order' %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-warning btn-block" id="btn-checkout">Checkout</button>
+        </form>
+    </div>
+</div>
+
+<!-- 7ot el date lladmins b dah: CheckoutOrders.objects.all()[0].date.strftime("%Y-%m-%d %H:%M") -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // variable to hold the total price of all orders
+        // calculated inside the loop iterating through orders
+        let total_price = 0;
+
+        const fetch_orders = async () => {
+            let request = await fetch("{% url 'fetch_orders' %}")
+            let data = await request.json()
+            // Save in local storage
+            if (data) {
+                await localStorage.setItem("orders", JSON.stringify(data));
+                data = JSON.parse(localStorage.getItem("orders"))
+            }
+            else {
+                data = JSON.parse(localStorage.getItem("orders"))
+            }
+
+            for (let item of data) {
+                total_price += item.price
+
+                if (!item.topping) {
+                item.topping = '-';
+                }
+                if (!item.size) {
+                item.size = "-";
+                }
+                if (!item.extra) {
+                item.extra = "-";
+                }
+                
+                html = `<div class="col-md-12">
+                    <div class="card-body">
+                        <h5 class="card-title"><u>Item</u></h5>
+                        <p class="card-text">Name: ${item.name}</p>
+                        <p class="card-text">Type: ${item.type}</p>
+                        <p class="card-text">Topping: ${item.topping}</p>
+                        <p class="card-text">Extra: ${item.extra}</p>
+                        <p class="card-text">Size: ${item.size}</p>
+                        <p class="card-text">Number: ${item.number}</p>
+                        <p class="card-text">Price: $${item.price}</p>
+                    </div>
+                </div>
+                <hr>`
+                document.querySelector(".no-gutters").insertAdjacentHTML("beforeend", html)
+                console.log(total_price)
+            }
+            document.querySelector('#total-price').innerHTML = `Total Price: $${total_price.toFixed(2)}`
+        }
+        fetch_orders();        
+})
+
+document.querySelector("#btn-checkout").onclick = () => {
+    let confirmation = confirm("Confirm order?")
+    if (confirmation == false) {
+        return false;
+    }
+    
+    const request = new XMLHttpRequest();
+    request.open("POST", "{% url 'confirm_order' %}")
+    const data = new FormData()
+    data.append('order_details_html', document.querySelector(".no-gutters").innerHTML)
+    request.send(data)
+
+    // clear all cart items
+}
+</script>
+
+
+{% endblock %}

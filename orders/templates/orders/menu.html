@@ -1,0 +1,359 @@
+{% extends "orders/base.html" %}
+
+{% load static %}
+
+{% block body %}
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Regular Pizza</h2>
+                <hr>
+            </div>
+            {% for pizza in regular_pizzas %}
+            {% if forloop.counter >= 4 %}
+            <div class="col-md-6 col-sm-6">
+                <div class="gallery-wrapper center-card-order">
+                    {% else %}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="gallery-wrapper">
+                            {% endif %}
+
+                            <img src="{{pizza.image_url}}" class="img-responsive gallery-img"
+                                alt="Pizza {{ forloop.counter }}">
+                            <div class="gallery-des">
+                                <h3>{{pizza.description}}</h3>
+                                <form action="{% url 'add_order' %}" method="POST">
+                                    {% csrf_token %}
+                                    <!-- El satren el gayeen bageeb behom el esm wel noo3 ashan dol msh submitted by the user -->
+                                    <input type="text" name="name" value="{{pizza.description}}" style="display: none;">
+                                    <input type="text" name="type" value="Regular Pizza" style="display: none;">
+                                    {% if pizza.description != 'Cheese' %}
+                                    <div class="form-group">
+                                        <label for="topping{{ forloop.counter }}">Topping</label>
+                                        <select class="form-control" id="topping{{forloop.counter}}" name='topping'>
+                                            {% for topping in pizza.topping.all %}
+                                            <option value="{{topping}}">{{topping}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% else %}
+                                    <fieldset disabled="disabled">
+                                        <div class="form-group">
+                                            <label for="topping{{ forloop.counter }}">Topping</label>
+                                            <select class="form-control" id="topping{{forloop.counter}}">
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %}
+
+                                    <div class="form-group">
+                                        <label>Size</label>
+                                        {% if pizza.description == 'Special'%}
+                                            <select class="form-control" name="size">
+                                                <option value="small">XLarge - ${{pizza.small_price}}</option>
+                                                <option value="large">XXLarge - ${{pizza.large_price}}</option>
+                                            </select>
+                                        {% else %}
+                                                <select class="form-control" name="size">
+                                                    <option value="small">Small - ${{pizza.small_price}}</option>
+                                                    <option value="large">Large - ${{pizza.large_price}}</option>
+                                                </select>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Number</label>
+                                        <input type="number" class="form-control" name="number" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-block">Add To Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</section>
+<!-- end menu -->
+
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Sicilian Pizza</h2>
+                <hr>
+            </div>
+            {% for pizza in sicilian_pizzas %}
+            {% if forloop.counter >= 4 %}
+            <div class="col-md-6 col-sm-6">
+                <div class="gallery-wrapper center-card-order">
+                    {% else %}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="gallery-wrapper">
+                            {% endif %}
+
+                            <img src="{{pizza.image_url}}" class="img-responsive gallery-img"
+                                alt="Pizza {{ forloop.counter }}">
+                            <div class="gallery-des">
+                                <h3>{{pizza.description}}</h3>
+                                <form action="{% url 'add_order' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="name" value="{{pizza.description}}" style="display: none;">
+                                    <input type="text" name="type" value="Sicilian Pizza" style="display: none;">
+                                    {% if pizza.description != 'Cheese' %}
+                                    <div class="form-group">
+                                        <label for="topping{{ forloop.counter }}">Topping</label>
+                                        <select class="form-control" id="topping{{forloop.counter}}" name='topping'>
+                                            {% for topping in pizza.topping.all %}
+                                            <option value="{{topping}}">{{topping}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    {% else %}
+                                    <fieldset disabled="disabled">
+                                        <div class="form-group">
+                                            <label for="topping{{ forloop.counter }}">Topping</label>
+                                            <select class="form-control" id="topping{{forloop.counter}}">
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <label>Size</label>
+                                        {% if pizza.description == 'Special'%}
+                                            <select class="form-control" name="size">
+                                                <option value="small">XLarge - ${{pizza.small_price}}</option>
+                                                <option value="large">XXLarge - ${{pizza.large_price}}</option>
+                                            </select>
+                                        {% else %}
+                                            <select class="form-control" name="size">
+                                                <option value="small">Small - ${{pizza.small_price}}</option>
+                                                <option value="large">Large - ${{pizza.large_price}}</option>
+                                            </select>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Number</label>
+                                        <input type="number" class="form-control" name="number" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-block">Add To Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+</section>
+<!-- end menu -->
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Subs</h2>
+                <hr>
+            </div>
+            {% for sub in subs %}
+            <div class="col-md-4 col-sm-4">
+                <div class="gallery-wrapper">
+                    <img src="{{sub.image_url}}" class="img-responsive gallery-img sub-image"
+                        alt="sub {{ forloop.counter }}">
+                    <div class="gallery-des">
+                        <h3>{{sub.name}}</h3>
+                        <form action="{% url 'add_order' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="name" value="{{sub.name}}" style="display: none;">
+                            <input type="text" name="type" value="Sub" style="display: none;">
+                            <div class="form-group">
+                                <label for="extra{{ forloop.counter }}">Extras</label>
+                                <select class="form-control" id="extra{{forloop.counter}}" name='extra'>
+                                    {% for extra in sub.extras.all %}
+                                    <option value="{{extra}}">{{extra}} - ${{extra.price}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Size</label>
+                                {% if sub.name == "Sausage, Peppers & Onions" %}
+                                <select class="form-control" name='size'>
+                                    <option value="large">Large - ${{sub.large_price}}</option>
+                                </select>
+                                {% else %}
+                                <select class="form-control" name="size">
+                                    <option value="small">Small - ${{sub.small_price}}</option>
+                                    <option value="large">Large - ${{sub.large_price}}</option>
+                                </select>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label>Number</label>
+                                <input type="number" class="form-control" name="number" value="1">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-warning btn-block">Add To Cart</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:3 %}
+            <hr class='sub-hr-spacing'>
+            <hr class='sub-hr-spacing'>
+            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+    </div>
+</section>
+<!-- end menu -->
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Pasta</h2>
+                <hr>
+            </div>
+            {% for pasta in pastas %}
+            {% if forloop.counter >= 4 %}
+            <div class="col-md-6 col-sm-6">
+                <div class="gallery-wrapper center-card-order">
+                    {% else %}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="gallery-wrapper">
+                            {% endif %}
+
+                            <img src="{{pasta.image_url}}" class="img-responsive gallery-img"
+                                alt="Pasta {{ forloop.counter }}">
+                            <div class="gallery-des">
+                                <h3>{{pasta.name}}</h3>
+                                <form action="{% url 'add_order' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="name" value="{{pasta.name}}" style="display: none;">
+                                    <input type="text" name="type" value="Pasta" style="display: none;">
+                                    <div class="form-group">
+                                        <label>Number</label>
+                                        <input type="number" class="form-control" name="number" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-block">Add To Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+</section>
+<!-- end menu -->
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Salads</h2>
+                <hr>
+            </div>
+            {% for salad in salads %}
+            {% if forloop.counter == 4 %}
+            <div class="col-md-12 col-sm-12">
+                <div class="gallery-wrapper center-card-order">
+                    {% else %}
+                    <div class="col-md-4 col-sm-4">
+                        <div class="gallery-wrapper">
+                            {% endif %}
+
+                            <img src="{{salad.image_url}}" class="img-responsive gallery-img"
+                                alt="Salad {{ forloop.counter }}">
+                            <div class="gallery-des">
+                                <h3>{{salad.name}}</h3>
+                                <form action="{% url 'add_order' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input type="text" name="name" value="{{salad.name}}" style="display: none;">
+                                    <input type="text" name="type" value="Salad" style="display: none;">
+                                    <div class="form-group">
+                                        <label>Number</label>
+                                        <input type="number" class="form-control" name="number" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-warning btn-block">Add To Cart</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- end menu -->
+
+<!-- start Menu -->
+<section id="gallery" class="templatemo-section templatemo-light-gray-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center text-uppercase">Dinner Platters</h2>
+                <hr>
+            </div>
+            {% for platter in platters %}
+            <div class="col-md-4 col-sm-4">
+                <div class="gallery-wrapper">
+                    <img src="{{platter.image_url}}" class="img-responsive gallery-img sub-image"
+                        alt="platter {{ forloop.counter }}">
+                    <div class="gallery-des">
+                        <h3>{{platter.name}}</h3>
+                        <form action="{% url 'add_order' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="name" value="{{platter.name}}" style="display: none;">
+                            <input type="text" name="type" value="Dinner Platter" style="display: none;">
+                            <div class="form-group">
+                                <label>Size</label>
+                                <select class="form-control" name="size">
+                                    <option value="small">Small - ${{platter.small_price}}</option>
+                                    <option value="large">Large - ${{platter.large_price}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Number</label>
+                                <input type="number" class="form-control" name="number" value="1">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-warning btn-block">Add To Cart</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- end menu -->
+
+<script>
+    document.querySelectorAll("form").forEach(form => {
+        form.onsubmit = () => {
+            alert("Added to cart.");
+        }
+    })
+</script>
+
+{% endblock %}

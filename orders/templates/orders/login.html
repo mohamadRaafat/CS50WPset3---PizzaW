@@ -1,0 +1,59 @@
+{% extends "orders/base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'orders/css/log-reg.css'%}">
+{% endblock %}
+
+
+{% block body %}
+{% if message %}
+    <div class="container contianer-log-reg ">
+        <div class="alert alert-warning" role="alert">
+            {{message}}
+        </div>
+    </div>
+{% endif %}
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+
+                <span class="login100-form-title p-b-33">
+                     Account Login
+                </span>
+
+                <div class="wrap-input100 validate-input">
+                    <input type="text" required class="input100" name="username" placeholder="Enter your username">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="wrap-input100 rs1 validate-input">
+                    <input type="password" required class="input100" name="password" placeholder="Enter your password">
+                    <span class="focus-input100-1"></span>
+                    <span class="focus-input100-2"></span>
+                </div>
+
+                <div class="container-login100-form-btn m-t-20">
+                    <button class="login100-form-btn">
+                        Login
+                    </button>
+                </div>
+
+                <div class="text-center nazelshwya">
+                    <span class="txt1">
+                        Create an account?
+                    </span>
+
+                    <a href="{% url 'register'%}" class="txt2 hov1">
+                        Sign up
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
