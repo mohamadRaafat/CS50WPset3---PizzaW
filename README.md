@@ -8,4 +8,4 @@ Web Programming with Python and JavaScript
 
 **Personal Touch**
 - An order is pending in the orders history page
-- Once the order is confirmed by the restaurant's admin, the state changes from pending to confirmed and is visible to the user. DONEE
+- Once the order is confirmed by the restaurant's admin, the state changes from pending to confirmed and is visible to the user.
